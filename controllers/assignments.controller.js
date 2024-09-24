@@ -1,9 +1,15 @@
 const db = require('../config/db.config');
+const { verifyToken } = require('../middlewares/auth.middleware');
 
 
 const createAssignment = (req, res) => {
     const { title, description, dueDate } = req.body;
     const teacherId = req.user.id;
+
+    if (req.user.role === 'student'){
+        return res.status(403).json({ error: 'Not Authorized' });
+    }
+
 
     if (!title || !description || !dueDate){
         return res.status(400).json({ error: 'Title, description, and due date are required'});
@@ -32,6 +38,10 @@ const submitAssignment = (req, res) => {
     const assignmentId = req.params.id;
     const studentId = req.user.id;
     const filePath = req.file.path; // Multer adds this to req object
+
+    if (req.user.role === 'teacher' || req.user.role === 'admin'){
+        return res.status(403).json({ error: 'Not Authorized' });
+    }
 
     const query = `INSERT INTO submissions (assignment_id, student_id, submission_date, file_path)
                     VALUES (?, ?, NOW(), ?)`;

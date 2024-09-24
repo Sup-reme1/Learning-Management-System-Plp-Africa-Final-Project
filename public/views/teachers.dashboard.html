@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="side-bar">
+        <a href="/user/profile">profile</a>
+
+    </div>
+    <div class="data-section">
+        <h1>Welcome, Teacher</h1>
+
+        <section>
+            <form id="upload-material-form" method="post">
+                <h2>Upload Materials</h2>
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" required>
+                </div>
+                <div>
+                    <label for="filepath">File</label>
+                    <input type="file" id="filepath" name="filepath" required>
+                </div>
+                <button type="submit">Upload Material</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Available Reading Materials</h2>
+            <ul id="materials-list">
+                <!-- Dynamically display materials and Download Materials -->
+            </ul>
+        </section>
+
+        <section>
+            <form id="upload-assignment-form" method="post">
+                <h2>Upload Assignments</h2>
+                <div>
+                    <label for="title1">Title</label>
+                    <input type="text" id="title1" name="title1" required>
+                </div>
+                <div>
+                    <label for="description1">Description</label>
+                    <input type="text" id="description1" name="description1" required>
+                </div>
+                <div>
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" id="dueDate" name="dueDate" required>
+                </div>
+                <button type="submit">Upload Assignment</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Assignments</h2>
+            <ul id="assignments-list">
+                <!-- Dynamically display assignments -->
+            </ul>
+        </section>
+
+        <section>
+            <form>
+                <h2>Upload Quizzes</h2>
+                <div id="quiz-title">
+                    <label for="title2">Title</label>
+                    <input type="text" id="title2" name="title2" required>
+                    <button onclick="collectQuestions()">Next</button>
+                </div>
+                <div class="questionDisplay">
+                    <div>
+                        <label for="questions">Question</label>
+                        <input type="text" id="questions" name="questions">
+                        <button id="appendQuestion" >Next Question</button>
+                    </div>
+                    <button type="submit" id="quizzes">Submit</button>
+                </div>
+            </form>
+        </section>
+        
+        <section>
+            <h2>Student Progress</h2>
+            <table id="progress-list">
+                <!-- Student progress will be dynamically populated here -->
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Assignment Submitted</th>
+                        <th>Assignment Names</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="../js/teachers.dashboard.js"></script>
+</body>
+</html>

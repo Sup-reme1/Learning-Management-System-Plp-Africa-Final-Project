@@ -4,6 +4,7 @@ const { verifyToken } = require('../middlewares/auth.middleware');
 const { createQuiz, getQuizzes } = require('../controllers/quizzes.controllers');
 
 // Create quiz (Teachers only)
+// Completed
 router.post('/', verifyToken, createQuiz);
 
 // Get all quizzes (Students and Teachers)

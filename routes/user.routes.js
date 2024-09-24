@@ -9,4 +9,6 @@ router.get('/profile', verifyToken, getUserProfile);
 // Update user profile info
 router.post('/profile', verifyToken, updateUserProfile);
 
+// router.post('/profile', verifyToken, async (req,res));
+
 module.exports = router;

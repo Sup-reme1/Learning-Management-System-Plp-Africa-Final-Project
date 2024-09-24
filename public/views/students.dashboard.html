@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="side-bar">
+        <ul>
+            <li><a href="/user/profile">Profile</a></li>
+            <li><a href="#materials">Reading Materials</a></li>
+            <li><a href="#assignment">Assignments</a></li>
+            
+            <!-- <li><a href="#submit-assignment">Submit Assignments</a></li> -->
+        </ul>
+        
+    </div>
+    <div class="data-section">
+        <h1>Welcome, Student</h1>
+        <section id="materials">
+            <h2>Available Reading Materials</h2>
+            <p>Click on any subject below to download material</p>
+            <ul id="materials-list">
+                <!-- Dynamically display materials -->
+            </ul>
+        </section>
+
+        <section id="assignment">
+            <h2>Assignments</h2>
+            <p>Click on any assignment below to download</p>
+            <ul id="assignments-list">
+                <!-- Dynamically display assignments -->
+            </ul>
+        </section>
+
+        <section id="submit-assignment">            
+            <form id="submit-assignment-form" method="post">
+                <h2>Submit Assignment </h2>
+                <p>Upload assignment below</p>
+                <div class="id" >
+                    <label for="id">id</label>
+                    <!-- <input type="text" id="id" name="id" required> -->
+                    <input type="text" id="id" name="id" required readonly>
+                </div>
+                <div>
+                    <label for="filepath">File</label>
+                    <input type="file" id="filepath" name="filepath" required>
+                </div>
+                <button type="submit">Submit Assignment</button>
+            </form>
+        </section>
+
+    </div>
+    <style>
+        .id{
+            display: none;
+        }
+        section{
+            text-align: left;
+        }
+
+        form{
+            margin: 0;
+        }
+
+        #assignment a{
+            font-weight: bold;
+        }
+        #assignment button{
+            margin: 5px 0;
+        }
+
+        #submit-assignment{
+            display: none;
+        }
+        #materials-list li, #assignments-list li{
+            padding-bottom: 2px;
+            text-wrap: nowrap;
+        }
+    </style>
+
+    <script src="../js/students.dashboard.js"></script>
+</body>
+</html>

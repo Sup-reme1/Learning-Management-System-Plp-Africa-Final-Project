@@ -7,6 +7,10 @@ exports.uploadMaterial = (req, res) => {
     const filePath = req.file.path; // Multer adds this to req object
     const teacherId = req.user.id; 
 
+    if (req.user.role === 'student'){
+        return res.status(403).json({ error: 'Not Authorized' });
+    }
+
     const query = `INSERT INTO materials (title, description, file_path, uploaded_by) VALUES (?, ?, ?, ?)`;
     db.query(query, [title, description, filePath, teacherId], (error, result) => {
         if (error) {
@@ -18,7 +22,7 @@ exports.uploadMaterial = (req, res) => {
 
 // Get list of materials for students
 exports.getMaterials = (req, res) => {
-    const query = `SELECT m.id, m.title, m.description, m.file_path, u.name as uploaded_by, m.uploaded_at
+    const query = `SELECT m.id, m.title, m.description, m.file_path, u.name as uploaded_by, u.role as role, m.uploaded_at
                     FROM materials m
                     JOIN users u ON m.uploaded_by = u.id`;
     db.query(query, (error, result) => {

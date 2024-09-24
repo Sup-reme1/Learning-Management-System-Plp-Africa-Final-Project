@@ -6,12 +6,15 @@ const router = express.Router();
 const multer = require('multer');
 
 // Upload a material (Teacher only, to protect with verifyToken middleware)
+// Teachers checked blocked student from uploading successful
 router.post('/upload', verifyToken, upload.single('file'), uploadMaterial);
 
 // Get all materials (accessible to everyone)
+// Everyone checked
 router.get('/', getMaterials)
 
 // Download material by ID
+// Teachers checked and students successfully
 router.get('/:id/download', downloadMaterial);
 
 

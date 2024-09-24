@@ -3,6 +3,13 @@ const { array } = require('../middlewares/upload.middleware');
 
 const createQuiz = (req, res) => {
     const { title, questions } = req.body;
+    // body format
+    // {
+            // title: '', done
+            // questions: [q1, q2, ...], done
+            // answers: [a1, a2, ...], split answer with spaces
+            // correctAnswer: ['put', 'dog', ...]
+    // }
     const teacherId = req.user.id;
     console.log(req.body);
 

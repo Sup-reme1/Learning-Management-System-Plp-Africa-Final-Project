@@ -1,0 +1,11 @@
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+{
+    "email": "supreme@gmail.com",
+    "password": "1234"
+}
+
+###
+GET http://localhost:5000/api/assignment/
+Content-Type: application/json
+Authorization: Bearer 

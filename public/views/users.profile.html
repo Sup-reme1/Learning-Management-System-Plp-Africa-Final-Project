@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="side-bar">
+        <ul>
+            <li>Dashboard</li>
+        </ul>
+        <img src="#" alt="profile-img">
+        <h1>Hello <span id="user-title"></span></h1> 
+        <p>Name: <span id="name-id"></span></p>
+        <p>Role: <span id="role-id"></span></p>
+    </div>
+
+    <div class="data-section">
+        <h2>Complete Profile</h2>
+        <form action="" id="update-profile">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name"> 
+            </div>
+            <div>
+                <label for="role">Role</label>
+                <select name="role" id="role">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div>
+                <label for="picture">Profile Picture</label>
+                <input type="image" name="picture" id="picture"> 
+            </div>
+            <div>
+                <label for="address">Home Address</label>
+                <input type="text" name="address" id="address"> 
+            </div>
+            <div>
+                <label for="contact">Phone Number</label>
+                <input type="text" name="contact" id="contact"> 
+            </div>
+            <div>
+                
+            <label>Gender</label>
+            <div class="gender">    
+                <div class="gender">
+                    <input id="sex" onclick="gender('m')" name="sex" type="radio">
+                    <label for="male">Male</label>
+                </div>
+                <div class="gender">
+                    <input id="sex" onclick="gender('f')" name="sex" type="radio">
+                    <label for="female">Female</label>
+                </div>
+                <div class="gender">
+                    <label for="age">Age</label>
+                    <input type="number" name="age" id="age"> 
+                </div>
+            </div>
+
+            <button type="submit">Update Profile</button>        
+        </form>
+    </div>
+
+    <style>
+        .gender{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+
+    </script>
+    <script src="../js/users.profile.js"></script>
+</body>
+</html>
