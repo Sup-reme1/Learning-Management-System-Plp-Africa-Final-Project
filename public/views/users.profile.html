@@ -9,7 +9,7 @@
 <body>
     <div class="side-bar">
         <ul>
-            <li>Dashboard</li>
+            <li onclick="next()">Dashboard</li>
         </ul>
         <img src="#" alt="profile-img">
         <h1>Hello <span id="user-title"></span></h1> 
@@ -21,8 +21,12 @@
         <h2>Complete Profile</h2>
         <form action="" id="update-profile">
             <div>
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name"> 
+                <label for="fname">First Name</label>
+                <input type="text" name="fname" id="fname"> 
+            </div>
+            <div>
+                <label for="lname">Last Name</label>
+                <input type="text" name="lname" id="lname"> 
             </div>
             <div>
                 <label for="role">Role</label>
@@ -74,9 +78,18 @@
         }
     </style>
 
-    <script>
-
-    </script>
     <script src="../js/users.profile.js"></script>
+    <script>
+        function next(){
+            if (user.role === 'teacher'){
+                window.location.href = '/teacher/dashboard';
+            } else if (user.role === 'student'){
+                window.location.href = '/student/dashboard';
+            } else if (user.role === 'admin'){
+                window.location.href = '/user/profile';
+            }
+        }
+    </script>
+    
 </body>
 </html>

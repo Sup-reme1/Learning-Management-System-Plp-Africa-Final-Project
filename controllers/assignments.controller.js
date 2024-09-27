@@ -1,7 +1,7 @@
 const db = require('../config/db.config');
 const { verifyToken } = require('../middlewares/auth.middleware');
 
-
+// Create assignment for teachers
 const createAssignment = (req, res) => {
     const { title, description, dueDate } = req.body;
     const teacherId = req.user.id;
@@ -24,6 +24,25 @@ const createAssignment = (req, res) => {
     });
 };
 
+
+// Delete assignment for teachers
+const removeAssignment = (req, res) => {
+    const { id } = req.body;
+
+    if (req.user.role === 'student' || req.user.role === 'admin'){
+        return res.status(403).json({ error: 'Not Authorized' });
+    }
+
+    const query = `DELETE FROM assignments WHERE id = ?`;
+    db.query(query, [id], (error, result) => {
+        if (error){
+            return res.status(500).json({ error: 'Error deleting assignment', details: error})
+        }
+        res.status(200).json({ message: "Assignment removed successfully", details: result});
+    });
+}
+
+// Get  assignment for teachers and Students
 const getAssignments = (req, res) => {
     const query = `SELECT * FROM assignments`;
 
@@ -34,6 +53,7 @@ const getAssignments = (req, res) => {
     });    
 };
 
+// Submit assignment for students
 const submitAssignment = (req, res) => {
     const assignmentId = req.params.id;
     const studentId = req.user.id;
@@ -52,4 +72,4 @@ const submitAssignment = (req, res) => {
     });
 };
 
-module.exports = { createAssignment, getAssignments, submitAssignment};
+module.exports = { createAssignment, getAssignments, submitAssignment, removeAssignment };

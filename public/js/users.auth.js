@@ -1,6 +1,8 @@
 // import jwtDecode from "jwt-decode";
 // const jwtDecode = require('jwt-decode');
 
+const msg = document.getElementById('msg');
+
 // Decoding of jwtToken
 function getUserData(token) {
     const decodeToken = jwt_decode(token);
@@ -18,7 +20,8 @@ forms.forEach(form => {
 register.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const name = document.getElementById('name').value;
+    const first_name = document.getElementById('fname').value;
+    const last_name = document.getElementById('lname').value;
     const email = document.getElementById('email').value;
     const role = document.getElementById('role').value;
     const password = document.getElementById('password').value;
@@ -29,12 +32,13 @@ register.addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, password, role } )
+            body: JSON.stringify({ first_name, last_name, email, password, role })
         });
 
         const data = await response.json();
 
         if(!response.ok) {
+            msg.innerText = 'User Exist';
             throw new Error('Bad Response');   
         } else {
             alert('Login User');
@@ -42,9 +46,10 @@ register.addEventListener('submit', async (e) => {
 
         document.getElementById('login-form').style.display = 'block';
         document.getElementById('registration-form').style.display = 'none';
-        
+        msg.remove();
+
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
     }
 })
 
@@ -66,6 +71,7 @@ login.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if(!response.ok) {
+            msg.innerText = 'Incorrect email or password';
             throw new Error('Bad Response');   
         }
 
@@ -76,28 +82,10 @@ login.addEventListener('submit', async (e) => {
 
         const user = getUserData(token);
 
-        if (user.role === 'teacher'){
-            window.location.href = '/teacher/dashboard';
-        } else if (user.role === 'student'){
-            window.location.href = '/student/dashboard';
-        } else if (user.role === 'admin'){
-            window.location.href = '/user/profile';
-        } else {
-            window.location.href = '/';
-        }
-
-        
+        window.location.href = '/user/profile';
 
     } catch (error) {
         console.error(error);
     }
 })
 
-
-//  // Decode the token to extract the user ID
-//  const decodeToken = jwt_decode(token);
-//  //console.log('Decoded token:', decodeToken);
-
-//  // Save the user ID in localStorage
-//  localStorage.setItem('user_id', decodeToken.id);
-//  //console.log('user ID saved in localStorage:', decodeToken.id);

@@ -19,12 +19,17 @@
             <li onclick="form('r')">Register</li>
             <li onclick="form('l')">Login</li>
         </ul>
-
+        <p id="msg"></p>
         <form id="registration-form" method="post">
+            
             <h2>Registeration Form</h2>
             <div>
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" required>
+            </div>
+            <div>
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" required>
             </div>
             <div>
                 <label for="email">Email</label>

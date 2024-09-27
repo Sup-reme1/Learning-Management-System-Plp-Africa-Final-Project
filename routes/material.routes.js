@@ -1,5 +1,5 @@
 const express = require('express');
-const { uploadMaterial, getMaterials, downloadMaterial } = require('../controllers/materials.controller');
+const { uploadMaterial, getMaterials, downloadMaterial, removeMaterial } = require('../controllers/materials.controller');
 const upload = require('../middlewares/upload.middleware');
 const { verifyToken } = require('../middlewares/auth.middleware'); // Assume this check jwt token
 const router = express.Router();
@@ -12,6 +12,9 @@ router.post('/upload', verifyToken, upload.single('file'), uploadMaterial);
 // Get all materials (accessible to everyone)
 // Everyone checked
 router.get('/', getMaterials)
+
+// delete materials api
+router.delete('/', verifyToken, removeMaterial)
 
 // Download material by ID
 // Teachers checked and students successfully

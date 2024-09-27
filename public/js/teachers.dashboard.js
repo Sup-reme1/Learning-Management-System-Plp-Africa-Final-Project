@@ -1,12 +1,5 @@
 const token = localStorage.getItem('token');
-
-// var ans = prompt('Should i laod this page?', '(yes or no)');
-// console.log(ans);
-
-// {/* <label for="questions">Question</label>
-// <input type="text" id="questions" name="questions" required>
-// <button id="appendQuestion">Next Question</button>
-// <button type="submit">Submit</button> */}
+var user = JSON.parse(localStorage.getItem('user')) || [];
 
 var questions = [];
 function collectQuestions(){
@@ -35,11 +28,6 @@ material.addEventListener('submit', async(e) => {
     formData.append('description', document.getElementById('description').value);
     formData.append('file', document.getElementById('filepath').files[0]);
 
-    // const title = document.getElementById('title').value;
-    // const description = document.getElementById('description').value;
-    // const file = document.getElementById('filepath').files[0];
-    // const formData = [ title, description, file ]
-
     try {
         method = 'POST';
 
@@ -56,7 +44,49 @@ material.addEventListener('submit', async(e) => {
         }
 
         alert('Material uploaded successfully');
-        // const data = await response.json();
+        window.location.reload();
+
+    } catch (error) {
+        console.log('Error:', error.message);
+    }
+});
+
+// Handle remove material with file and event delegation
+const removeMaterial = document.getElementById('materials-list');
+removeMaterial.addEventListener('click', async(e) => {
+    e.preventDefault();
+
+    if (!e.target.classList.contains('delete-btn')){
+        return false;
+    }
+
+    const id = e.target.getAttribute('data-id');
+
+    if (!confirm('Did you want to delete the material?')){
+        return false;
+    }
+
+    try {
+        method = 'DELETE';
+        const body =  JSON.stringify({ id });
+
+        const response = await fetch('http://localhost:5000/api/materials/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: body
+        });
+
+        if (!response.ok){
+            throw new Error('Fail to delete materials');
+        }
+
+        const data = await response.json();
+        alert('Material deleted successfully');
+
+        window.location.reload();
 
     } catch (error) {
         console.log('Error:', error.message);
@@ -97,6 +127,49 @@ assignment.addEventListener('submit', async(e) => {
 
         console.log(response);
         alert('Assignment uploaded successfully');
+        window.location.reload();
+
+    } catch (error) {
+        console.log('Error:', error.message);
+    }
+});
+
+// Handle remove material with file and event delegation
+const removeAssignment = document.getElementById('assignments-list');
+removeAssignment.addEventListener('click', async(e) => {
+    e.preventDefault();
+
+    if (!e.target.classList.contains('delete-btn')){
+        return false;
+    }
+
+    const id = e.target.getAttribute('data-id');
+
+    if (!confirm('Did you want to delete the assignment?')){
+        return false;
+    }
+
+    try {
+        method = 'DELETE';
+        const body =  JSON.stringify({ id });
+
+        const response = await fetch('http://localhost:5000/api/assignment', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: body
+        });
+
+        if (!response.ok){
+            throw new Error('Fail to delete assignment');
+        }
+
+        const data = await response.json();
+        alert('Assignment deleted successfully');
+
+        window.location.reload();
 
     } catch (error) {
         console.log('Error:', error.message);
@@ -133,6 +206,7 @@ quizzes.addEventListener('click', async(e) => {
             console.log(response);
             alert('Quiz uploaded successfully');
             questions = [];
+            window.location.reload();
 
         } catch (error) {
             console.log('Error:', error.message);
@@ -164,7 +238,10 @@ async function fetchMaterials() {
 
         data.forEach(material => {
             const li = document.createElement('li');
-            li.innerHTML = `<a href="/api/materials/${material.id}/download">${material.title}</a> -  ${material.description}`;
+            li.innerHTML = `<div>
+                                <a href="/api/materials/${material.id}/download">${material.title} - ${material.description}</a><br>
+                                <button class="delete-btn" data-id="${material.id}">Delete Material</button>
+                            </div>`;
             ul.appendChild(li);
         });
 
@@ -197,7 +274,11 @@ async function fetchAssignments() {
         data.forEach(assignment => {
             var date = new Date(assignment.due_date);
             const li = document.createElement('li');
-            li.innerHTML = `<a href="/api/materials/${assignment.id}/download">${assignment.title}</a> -  ${assignment.description}  - Due: ${date}`;
+            li.innerHTML = `<div>
+                                ${assignment.title} - ${assignment.description}<br>
+                                Due: ${date.toDateString()}<br>
+                                <button class="delete-btn" data-id="${assignment.id}">Delete assignment</button>
+                            </div>`;
             ul.appendChild(li);
         });
 
@@ -246,7 +327,49 @@ async function fetchProgress() {
     }
 }
 
+// Fetch quizzes
+async function fetchQuizzes() {
+    try {
+        method = 'GET';
+        const response = await fetch('http://localhost:5000/api/quizzes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            // body: JSON.stringify({  }));
+        });
+
+        if (!response.ok){
+            throw new Error('Fail to fetch quizzes');
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        const ul = document.getElementById('-list');
+        ul.innerHTML = '';
+
+        
+        data.forEach(assignment => {
+            var date = new Date(assignment.due_date);
+            const li = document.createElement('li');
+            li.innerHTML = `<div>
+                                <a href="/api/materials/${assignment.id}/download">${assignment.title} -  
+                                ${assignment.description}</a><br>
+                                Due: ${date.toDateString()}<br>
+                                <button class="submit-btn" data-id="${assignment.id}">Submit Assignment</button>
+                            </div>`;
+            ul.appendChild(li);
+        });
+
+    } catch (error) {
+        console.log('Error:', error.message);
+    }
+}
+
 
 fetchMaterials();
 fetchAssignments();
+fetchQuizzes();
 fetchProgress();

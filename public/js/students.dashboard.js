@@ -1,4 +1,5 @@
 const token = localStorage.getItem('token');
+var user = JSON.parse(localStorage.getItem('user')) || [];
 var { method, body } = '';
 const options = {
     method: method,
@@ -9,6 +10,9 @@ const options = {
     body: body ? JSON.stringify(body) : null
 };
 
+document.getElementById('name').innerHTML = user.name;
+
+// Fetch assignment
 async function fetchAssignments() {
     try {
         method = 'GET';
@@ -40,8 +44,41 @@ async function fetchAssignments() {
         console.log('Error:', error.message);
     }
 }
+// Fetch quizzes
+async function fetchQuizzes() {
+    try {
+        method = 'GET';
+        const response = await fetch('http://localhost:5000/api/quizzes', options);
 
-////// Using Event DELEGATION to grap data-id and prefil in submitform
+        if (!response.ok){
+            throw new Error('Fail to fetch quizzes');
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        const ul = document.getElementById('-list');
+        ul.innerHTML = '';
+
+        
+        data.forEach(assignment => {
+            var date = new Date(assignment.due_date);
+            const li = document.createElement('li');
+            li.innerHTML = `<div>
+                                <a href="/api/materials/${assignment.id}/download">${assignment.title} -  
+                                ${assignment.description}</a><br>
+                                Due: ${date.toDateString()}<br>
+                                <button class="submit-btn" data-id="${assignment.id}">Submit Assignment</button>
+                            </div>`;
+            ul.appendChild(li);
+        });
+
+    } catch (error) {
+        console.log('Error:', error.message);
+    }
+}
+
+// Using Event DELEGATION to grap data-id and prefil in submitform
 const assignmentContainer = document.getElementById('assignments-list');
 assignmentContainer.addEventListener('click', (event) => {
     if (event.target.classList.contains('submit-btn')){
@@ -53,6 +90,7 @@ assignmentContainer.addEventListener('click', (event) => {
     }
 });
 
+// Fetch materials
 async function fetchMaterials() {
     try {
         method = 'GET';
@@ -119,3 +157,5 @@ submission.addEventListener('submit', async(e) => {
 
 fetchMaterials();
 fetchAssignments();
+fetchQuizzes();
+

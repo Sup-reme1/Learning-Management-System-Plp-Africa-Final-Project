@@ -72,7 +72,7 @@
                 <div id="quiz-title">
                     <label for="title2">Title</label>
                     <input type="text" id="title2" name="title2" required>
-                    <button onclick="collectQuestions()">Next</button>
+                    <h5 id="btn" onclick="collectQuestions()">Next</h5>
                 </div>
                 <div class="questionDisplay">
                     <div>
@@ -83,6 +83,13 @@
                     <button type="submit" id="quizzes">Submit</button>
                 </div>
             </form>
+        </section>
+        
+        <section>
+            <h2>Quizzes</h2>
+            <ul id="quiz-list">
+                <!-- Dynamically display quiz -->
+            </ul>
         </section>
         
         <section>
@@ -103,6 +110,12 @@
         </section>
     </div>
 
+    <style>
+        #btn{
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
     <script src="../js/teachers.dashboard.js"></script>
 </body>
 </html>

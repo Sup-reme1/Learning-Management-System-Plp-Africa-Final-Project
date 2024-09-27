@@ -17,7 +17,7 @@ const updateProgress = (req, res) => {
 const getStudentProgress = (req, res) => {
     const query = `SELECT 
                         u.id AS student_id,
-                        u.name AS student_name,
+                        u.first_name AS student_name,
                         COUNT(s.student_id) AS assignments_submitted,
                         IFNULL(GROUP_CONCAT(DISTINCT a.title SEPARATOR ', '), 'No submissions') AS assignment_names
                     FROM 
@@ -29,7 +29,7 @@ const getStudentProgress = (req, res) => {
                     WHERE 
                         u.role = 'student'
                     GROUP BY 
-                        u.id, u.name
+                        u.id, u.first_name
     `
     db.query(query, (error, result) => {
         if (error) {

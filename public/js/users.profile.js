@@ -1,7 +1,4 @@
-// GET getUserProfile
-// POST updateUserProfile
-// route '/api/users/profile'
-
+var user = JSON.parse(localStorage.getItem('user')) || [];
 const token = localStorage.getItem('token');
 var { method, body } = '';
 const options = {
@@ -12,9 +9,17 @@ const options = {
     },
     body: body ? JSON.stringify(body) : null
 };
+var sexType;
+function gender(x) {
+    if (x === 'm'){
+        sexType = 'male';
+    } else if (x === 'f'){
+        sexType = 'female';
+    }
+}
 
 // Fetching profile
-async function fetchMaterials() {
+async function fetchUser() {
     try {
         method = 'GET';
         const response = await fetch('http://localhost:5000/api/users/profile', options);
@@ -25,6 +30,8 @@ async function fetchMaterials() {
 
         const data = await response.json();
 
+        localStorage.setItem('user', JSON.stringify(data));
+
         const title = document.getElementById('user-title');
         const name = document.getElementById('name-id');
         const email = document.getElementById('email-id');
@@ -32,20 +39,11 @@ async function fetchMaterials() {
 
         // Populate the data
         title.innerHTML = data.role;
-        name.innerHTML = data.name;
+        name.innerHTML = data.first_name;
         role.innerHTML = data.role;
 
     } catch (error) {
         console.log('Error:', error.message);
-    }
-}
-
-var sexType;
-function gender(x) {
-    if (x === 'm'){
-        sexType = 'male';
-    } else if (x === 'f'){
-        sexType = 'female';
     }
 }
 
@@ -54,18 +52,23 @@ const update = document.getElementById('update-profile');
 update.addEventListener('submit', async(e) => {
     e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const role = document.getElementById('role').value;    
-    const address = document.getElementById('address').value || 'null';    
-    const contact = document.getElementById('contact').value || 'null';    
-    const gender = sexType || 'null';    
-    const age = document.getElementById('age').value || 'null';    
+    const first_name = document.getElementById('fname').value || user.first_name;
+    const last_name = document.getElementById('lname').value || user.last_name;
+    const role = document.getElementById('role').value || user.role;    
+    const address = document.getElementById('address').value || user.address;    
+    const contact = document.getElementById('contact').value || user.contact;    
+    const gender = sexType || user.gender;    
+    var age = document.getElementById('age').value;    
+
+    if (age === ''){
+        if (user.age === null) age = 0;
+        if (user.age !== null) age = user.age;
+    }
 
     try {
         
         method = 'POST';
-        body = { name, role, address, contact, gender, age }
-        console.log(body);
+        body = { first_name, last_name, role, address, contact, gender, age };
         const response = await fetch(`http://localhost:5000/api/users/profile`, {
             method: 'POST',
             headers: {
@@ -87,4 +90,4 @@ update.addEventListener('submit', async(e) => {
     }
 });
 
-fetchMaterials();
+fetchUser();
