@@ -21,11 +21,14 @@ exports.getUserProfile = (req, res) => {
 
 exports.updateUserProfile = (req, res) => {
     const userId = req.user.id;
+    const profileImg = req.profileImg.path;
     const { first_name, last_name, role, address, contact, gender, age } = req.body;
 
+    console.log(profileImg);
+
     try {
-        const query = `UPDATE users SET first_name = ?, last_name = ?, role = ?, address = ?, contact = ?, gender = ?, age =? WHERE id = ?`;
-        db.query(query, [first_name, last_name, role, address, contact, gender, age, userId], (error, result) => {
+        const query = `UPDATE users SET first_name = ?, last_name = ?, role = ?, address = ?, profile_image_path = ?, contact = ?, gender = ?, age =? WHERE id = ?`;
+        db.query(query, [first_name, last_name, role, address, profileImg, contact, gender, age, userId], (error, result) => {
             console.log('error:', error);
             console.log('result:', result);
             if (error) return res.status(500).json({ error: 'Database error', details: error});

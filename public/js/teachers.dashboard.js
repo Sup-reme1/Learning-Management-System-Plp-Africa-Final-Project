@@ -317,7 +317,7 @@ async function fetchProgress() {
             const row = document.createElement('tr');
             row.innerHTML = `
                             <td>${student.student_name}</td>
-                            <td>${student.assignment_submitted}</td>
+                            <td>${student.assignments_submitted}</td>
                             <td>${student.assignment_names}</td>`;
             tbody.append(row);
         });
@@ -345,20 +345,17 @@ async function fetchQuizzes() {
         }
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
-        const ul = document.getElementById('-list');
+        const ul = document.getElementById('quiz-list');
         ul.innerHTML = '';
-
         
-        data.forEach(assignment => {
-            var date = new Date(assignment.due_date);
+        data.forEach(quiz => {
+            // var date = new Date(assignment.due_date);
             const li = document.createElement('li');
             li.innerHTML = `<div>
-                                <a href="/api/materials/${assignment.id}/download">${assignment.title} -  
-                                ${assignment.description}</a><br>
-                                Due: ${date.toDateString()}<br>
-                                <button class="submit-btn" data-id="${assignment.id}">Submit Assignment</button>
+                                <a href="/api/materials/${quiz.id}/download">${quiz.title}</a><br>
+                                <button class="delete-btn" data-id="${quiz.id}">Delete Assignment</button>
                             </div>`;
             ul.appendChild(li);
         });

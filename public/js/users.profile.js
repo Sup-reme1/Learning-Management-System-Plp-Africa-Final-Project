@@ -9,6 +9,10 @@ const options = {
     },
     body: body ? JSON.stringify(body) : null
 };
+var first_name = document.getElementById('fname').value = user.first_name;
+var last_name = document.getElementById('lname').value = user.last_name;
+var role = document.getElementById('role').value = user.role;  
+
 var sexType;
 function gender(x) {
     if (x === 'm'){
@@ -57,6 +61,7 @@ update.addEventListener('submit', async(e) => {
     const role = document.getElementById('role').value || user.role;    
     const address = document.getElementById('address').value || user.address;    
     const contact = document.getElementById('contact').value || user.contact;    
+    const profileImg = document.getElementById('picture').value || user.contact;    
     const gender = sexType || user.gender;    
     var age = document.getElementById('age').value;    
 
@@ -68,7 +73,7 @@ update.addEventListener('submit', async(e) => {
     try {
         
         method = 'POST';
-        body = { first_name, last_name, role, address, contact, gender, age };
+        body = { first_name, last_name, role, address, profileImg, contact, gender, age };
         const response = await fetch(`http://localhost:5000/api/users/profile`, {
             method: 'POST',
             headers: {

@@ -63,8 +63,8 @@ const submitAssignment = (req, res) => {
         return res.status(403).json({ error: 'Not Authorized' });
     }
 
-    const query = `INSERT INTO submissions (assignment_id, student_id, submission_date, file_path)
-                    VALUES (?, ?, NOW(), ?)`;
+    const query = `INSERT INTO submissions (assignment_id, student_id, submission_file)
+                    VALUES (?, ?, ?)`;
     db.query(query, [assignmentId, studentId, filePath], (error, result) => {
         if (error) return res.status(500).json({ error: 'Database error', details: error});
 

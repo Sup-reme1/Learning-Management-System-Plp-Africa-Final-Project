@@ -22,23 +22,19 @@
         <form action="" id="update-profile">
             <div>
                 <label for="fname">First Name</label>
-                <input type="text" name="fname" id="fname"> 
+                <input type="text" name="fname" id="fname" readonly> 
             </div>
             <div>
                 <label for="lname">Last Name</label>
-                <input type="text" name="lname" id="lname"> 
+                <input type="text" name="lname" id="lname" readonly> 
             </div>
             <div>
                 <label for="role">Role</label>
-                <select name="role" id="role">
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                    <option value="admin">Admin</option>
-                </select>
+                <input name="role" id="role" readonly>
             </div>
             <div>
                 <label for="picture">Profile Picture</label>
-                <input type="image" name="picture" id="picture"> 
+                <input type="file" name="picture" id="picture"> 
             </div>
             <div>
                 <label for="address">Home Address</label>

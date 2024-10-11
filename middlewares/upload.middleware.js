@@ -20,12 +20,12 @@ const upload = multer({
     limits: { fileSize: 10 * 1024 * 1024 }, // limit 10mb
     fileFilter: (req, file, cb) => {
         // Only allow specific filetypes
-        const filetypes = /pdf|doc|docx|txt/;
+        const filetypes = /pdf|doc|docx|txt|jpeg/;
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
         if (extname) {
             return cb(null, true);
         } else {
-            cb(new Error('Only .pdf, .doc, .docx, and .txt formats are allowed'));
+            cb(new Error('Only .pdf, .doc, .docx, jpeg and .txt formats are allowed'));
         }
     }
 })
